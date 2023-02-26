@@ -7,4 +7,9 @@ const { Pool } = pkg;
 
 export const db = new Pool({
     connectionString: process.env.DATABASE_URL,
+    ...(process.env.NODE_ENV === "production" && {
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    }),
   });
