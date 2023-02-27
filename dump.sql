@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.12 (Ubuntu 12.12-0ubuntu0.20.04.1)
--- Dumped by pg_dump version 12.12 (Ubuntu 12.12-0ubuntu0.20.04.1)
+-- Dumped from database version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.5 (Ubuntu 14.5-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -28,8 +28,9 @@ CREATE TABLE public."public.urls" (
     id integer NOT NULL,
     url text NOT NULL,
     "shortUrl" character varying(50) NOT NULL,
-    "createdAt" date DEFAULT '2023-02-26'::date NOT NULL,
-    "userId" integer NOT NULL
+    "userId" integer NOT NULL,
+    views integer NOT NULL,
+    "createdAt" date DEFAULT '2023-02-26'::date NOT NULL
 );
 
 
@@ -110,8 +111,7 @@ ALTER TABLE ONLY public."public.users" ALTER COLUMN id SET DEFAULT nextval('publ
 -- Data for Name: public.users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."public.users" VALUES (1, 'João', 'joao@driven.com.br', 'driven', '2023-02-26');
-INSERT INTO public."public.users" VALUES (2, 'João Vargas', 'joao@gmail.com.br', 'driven', '2023-02-26');
+INSERT INTO public."public.users" VALUES (1, 'João', 'joao@driven.com.br', '$2a$10$pfDePrSqiD3eI8lCRhVXLu5Ulyv9arbZpWYvZ3dxzh.cYDbQsmQuq', '2023-02-27');
 
 
 --
@@ -125,7 +125,7 @@ SELECT pg_catalog.setval('public."public.urls_id_seq"', 1, false);
 -- Name: public.users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."public.users_id_seq"', 2, true);
+SELECT pg_catalog.setval('public."public.users_id_seq"', 1, true);
 
 
 --
