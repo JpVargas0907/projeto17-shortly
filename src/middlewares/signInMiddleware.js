@@ -13,14 +13,19 @@ export default async function validateLogin(req, res, next) {
     `SELECT password FROM "public.users" WHERE email = $1`,
     [email]
   );
+
+  if (validation.error) {
+    return res.sendStatus(422);
+  } else if (verifyEmailRegister.rowCount === 0) {
+    return res.sendStatus(401);
+  }
+
   const isPasswordValid = bcrypt.compareSync(
     password,
     hashedPassword.rows[0].password
   );
 
-  if (validation.error) {
-    return res.sendStatus(422);
-  } else if ((verifyEmailRegister.rowCount = 0 || isPasswordValid === false)) {
+  if (isPasswordValid === false) {
     return res.sendStatus(401);
   }
 
