@@ -23,7 +23,6 @@ export default async function urlShortenMiddleware(req, res, next) {
     req.user = decoded;
     next();
   } catch (error) {
-    console.log(error.message);
     return res.sendStatus(401);
   }
 }

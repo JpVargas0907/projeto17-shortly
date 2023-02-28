@@ -15,11 +15,13 @@ export async function urlShorten(req, res) {
 
   try {
     const query = await db.query(
-      `INSERT INTO "public.urls" VALUES ($1, $2, $3, $4, $5) RETURNING id`,
-      [createdAt, url, shortUrl, views, userId]
+      `INSERT INTO "public.urls" ("createdAt", url, "shortUrl", views, "userId") VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+      [createdAt, url, shortUrl, views, userId.rows[0].id]
     );
     const id = query.rows[0].id;
 
     res.status(201).json({ id, shortUrl });
-  } catch (error) {}
+  } catch (error) {
+    res.sendStatus(401);
+  }
 }
