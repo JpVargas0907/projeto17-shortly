@@ -16,5 +16,12 @@ export default async function urlShortenMiddleware(req, res, next) {
     return res.sendStatus(422);
   }
 
+  try {
+    const decoded = jwt.verify(token, "minha-chave-secreta");
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.sendStatus(401);
+  }
   next();
 }
