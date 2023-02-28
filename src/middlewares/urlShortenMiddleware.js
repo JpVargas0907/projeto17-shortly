@@ -1,4 +1,5 @@
 import { urlShortenSchema } from "../schemas/urlShortenSchema.js";
+import jwt from "jsonwebtoken";
 
 export default async function urlShortenMiddleware(req, res, next) {
   const validation = urlShortenSchema.validate(req.body);
@@ -11,7 +12,8 @@ export default async function urlShortenMiddleware(req, res, next) {
   const [bearer, token] = authHeader.split(" ");
 
   if (bearer !== "Bearer" || !token) {
-    return res.sendStatus(401);
+    console.log(!token);
+    return res.send("Deu ruim");
   } else if (validation.error) {
     return res.sendStatus(422);
   }
@@ -21,7 +23,7 @@ export default async function urlShortenMiddleware(req, res, next) {
     req.user = decoded;
     next();
   } catch (error) {
+    console.log(error.message);
     return res.sendStatus(401);
   }
-  next();
 }
