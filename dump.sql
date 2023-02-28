@@ -30,7 +30,7 @@ CREATE TABLE public."public.urls" (
     "shortUrl" character varying(50) NOT NULL,
     "userId" integer NOT NULL,
     views integer NOT NULL,
-    "createdAt" date DEFAULT '2023-02-26'::date NOT NULL
+    "createdAt" timestamp without time zone DEFAULT '2023-02-26'::date NOT NULL
 );
 
 
@@ -63,7 +63,7 @@ CREATE TABLE public."public.users" (
     name character varying(100) NOT NULL,
     email character varying(100) NOT NULL,
     password text NOT NULL,
-    "createdAt" date DEFAULT '2023-02-26'::date NOT NULL
+    "createdAt" timestamp without time zone DEFAULT '2023-02-26'::date NOT NULL
 );
 
 
@@ -111,7 +111,7 @@ ALTER TABLE ONLY public."public.users" ALTER COLUMN id SET DEFAULT nextval('publ
 -- Data for Name: public.users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public."public.users" VALUES (1, 'João', 'joao@driven.com.br', '$2a$10$pfDePrSqiD3eI8lCRhVXLu5Ulyv9arbZpWYvZ3dxzh.cYDbQsmQuq', '2023-02-27');
+INSERT INTO public."public.users" VALUES (1, 'João', 'joao@driven.com.br', '$2a$10$pfDePrSqiD3eI8lCRhVXLu5Ulyv9arbZpWYvZ3dxzh.cYDbQsmQuq', '2023-02-27 00:00:00');
 
 
 --
