@@ -35,7 +35,11 @@ export async function getUrlById(req, res) {
       [id]
     );
 
-    res.send(url.rows[0]).status(200);
+    if (url.rows.length > 0) {
+      res.send(url.rows[0]).status(200);
+    } else {
+      res.status(404).send("URL not found");
+    }
   } catch (error) {
     res.send(error.message);
   }
