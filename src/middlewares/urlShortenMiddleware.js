@@ -12,7 +12,6 @@ export default async function urlShortenMiddleware(req, res, next) {
   const [bearer, token] = authHeader.split(" ");
 
   if (bearer !== "Bearer" || !token) {
-    console.log(!token);
     return res.send("Deu ruim");
   } else if (validation.error) {
     return res.sendStatus(422);
