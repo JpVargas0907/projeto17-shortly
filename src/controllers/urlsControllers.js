@@ -50,11 +50,18 @@ export async function openUrlByShortUrl(req, res) {
 
   try {
     const urlBody = await db.query(
-      `SELECT url FROM "public.urls" WHERE "shortUrl" = $1`,
+      `SELECT url, views FROM "public.urls" WHERE "shortUrl" = $1`,
       [shortUrl]
     );
 
     if (urlBody.rowCount > 0) {
+      const viewCounter = urlBody.rows[0].views + 1;
+
+      await db.query(
+        `UPDATE "public.urls" SET views = $1 WHERE "shortUrl" = $2`,
+        [viewCounter, shortUrl]
+      );
+
       res.redirect(urlBody.rows[0].url);
     } else {
       res.sendStatus(404);
