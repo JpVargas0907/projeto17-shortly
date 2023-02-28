@@ -35,10 +35,29 @@ export async function getUrlById(req, res) {
       [id]
     );
 
-    if (url.rows.length > 0) {
+    if (url.rowCount > 0) {
       res.send(url.rows[0]).status(200);
     } else {
       res.status(404).send("URL not found");
+    }
+  } catch (error) {
+    res.send(error.message);
+  }
+}
+
+export async function openUrlByShortUrl(req, res) {
+  const shortUrl = req.params.shortUrl;
+
+  try {
+    const urlBody = await db.query(
+      `SELECT url FROM "public.urls" WHERE "shortUrl" = $1`,
+      [shortUrl]
+    );
+
+    if (urlBody.rowCount > 0) {
+      res.redirect(urlBody.rows[0].url);
+    } else {
+      res.sendStatus(404);
     }
   } catch (error) {
     res.send(error.message);
