@@ -25,3 +25,18 @@ export async function urlShorten(req, res) {
     res.sendStatus(401);
   }
 }
+
+export async function getUrlById(req, res) {
+  const id = req.params.id;
+
+  try {
+    const url = await db.query(
+      `SELECT id, "shortUrl", url FROM "public.urls" WHERE id=$1`,
+      [id]
+    );
+
+    res.send(url.rows[0]).status(200);
+  } catch (error) {
+    res.send(error.message);
+  }
+}
