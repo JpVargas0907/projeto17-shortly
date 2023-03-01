@@ -70,3 +70,31 @@ export async function openUrlByShortUrl(req, res) {
     res.send(error.message);
   }
 }
+
+export async function deleteUrl(req, res) {
+  const urlId = req.params.id;
+  const user = req.user;
+  const urlUserId = await db.query(
+    `SELECT "userId" FROM "public.urls" WHERE id = $1`,
+    [urlId]
+  );
+  const userId = await db.query(
+    `SELECT id FROM "public.users" WHERE  email = $1`,
+    [user.email]
+  );
+
+  try {
+    if (urlUserId.rowCount > 0) {
+      if (urlUserId.rows[0].userId !== userId.rows[0].id) {
+        res.sendStatus(401);
+      } else {
+        await db.query(`DELETE FROM "public.urls" WHERE id = $1`, [urlId]);
+        res.sendStatus(204);
+      }
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    res.send(error.message);
+  }
+}
